@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+<title>SANZONE — Smart Complaint Manager</title>
+<style>
+:root{--ink:#111;--muted:#737373;--line:#e9e9e9;--soft:#f7f7f7;--white:#fff;--black:#111;--green:#16834a;--amber:#a66a00;--red:#b42318;--radius:18px;--shadow:0 12px 36px rgba(0,0,0,.055)}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:var(--ink);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{min-height:100vh}.sidebar{position:fixed;inset:0 auto 0 0;width:248px;border-right:1px solid var(--line);padding:24px 16px;background:#fff;display:flex;flex-direction:column;z-index:5}.brand{display:flex;align-items:center;gap:11px;padding:0 10px 30px}.brandmark{width:36px;height:36px;border-radius:11px;background:#111;color:#fff;display:grid;place-items:center;font-weight:800;letter-spacing:-1px}.brand strong{font-size:16px;letter-spacing:1.7px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:1.5px;margin-top:1px}.navlabel{font-size:10px;color:#999;letter-spacing:1.5px;padding:12px 12px 8px;font-weight:700}.nav{display:grid;gap:5px}.nav button{border:0;background:transparent;text-align:left;padding:11px 12px;border-radius:11px;color:#555;display:flex;gap:12px;align-items:center}.nav button:hover,.nav button.active{background:#f2f2f2;color:#111}.nav .ico{width:19px;text-align:center;font-size:16px}.sidebottom{margin-top:auto;border-top:1px solid var(--line);padding:16px 10px 0;color:var(--muted);font-size:11px}.main{margin-left:248px;min-height:100vh}.topbar{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);z-index:4}.crumb{color:var(--muted);font-size:12px}.topright{display:flex;align-items:center;gap:12px}.avatar{width:34px;height:34px;border-radius:50%;background:#111;color:white;display:grid;place-items:center;font-weight:700}.content{max-width:1260px;margin:auto;padding:34px}.page{display:none}.page.active{display:block}.eyebrow{font-size:10px;letter-spacing:1.7px;color:#888;font-weight:750;text-transform:uppercase}.heading{font-size:30px;letter-spacing:-1.1px;margin:5px 0 5px;font-weight:750}.sub{color:var(--muted);margin:0 0 25px}.grid{display:grid;gap:16px}.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin:24px 0}.card{border:1px solid var(--line);border-radius:var(--radius);padding:20px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.015)}.statlabel{font-size:12px;color:var(--muted)}.statnum{font-size:30px;font-weight:750;letter-spacing:-1px;margin:8px 0 2px}.statfoot{font-size:11px;color:#999}.split{grid-template-columns:1.25fr .75fr}.sectiontitle{font-weight:700;font-size:15px;margin:0 0 14px}.quickgrid{grid-template-columns:repeat(3,minmax(0,1fr))}.quick{border:1px solid var(--line);border-radius:14px;padding:17px;cursor:pointer;transition:.2s;background:white}.quick:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:#bbb}.quick .qico{font-size:20px;margin-bottom:12px}.quick b{display:block;font-size:13px}.quick span{font-size:11px;color:var(--muted)}.btn{border:1px solid #111;background:#111;color:#fff;padding:10px 15px;border-radius:10px;font-weight:650;font-size:12px;display:inline-flex;align-items:center;justify-content:center;gap:8px}.btn:hover{background:#333}.btn.secondary{background:#fff;color:#111;border-color:var(--line)}.btn.secondary:hover{background:#f6f6f6}.btn.ghost{background:transparent;color:#555;border-color:transparent}.btn.danger{background:#fff;color:var(--red);border-color:#f0d4d1}.btn:disabled{opacity:.4;cursor:not-allowed}.actions{display:flex;gap:8px;flex-wrap:wrap}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:11px;color:#555;font-weight:700}.field input,.field select,.field textarea{width:100%;border:1px solid #e4e4e4;border-radius:10px;padding:11px 12px;background:#fff;outline:none;color:#111}.field input:focus,.field select:focus,.field textarea:focus{border-color:#777;box-shadow:0 0 0 3px #1111110b}.field textarea{min-height:105px;resize:vertical}.hint{font-size:10px;color:#999}.levelrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.level{border:1px solid var(--line);border-radius:11px;padding:12px;text-align:left;background:#fff}.level.selected{border-color:#111;background:#f6f6f6}.level b{display:block;font-size:13px}.level small{font-size:10px;color:var(--muted)}.editor{min-height:330px;font:13px/1.75 ui-monospace,SFMono-Regular,Menlo,monospace}.drop{border:1px dashed #ccc;border-radius:12px;padding:18px;text-align:center;background:#fafafa;color:#777}.drop input{max-width:100%}.filelist{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.filepill{background:#f2f2f2;border-radius:20px;padding:5px 9px;font-size:10px;color:#555}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px;flex-wrap:wrap}.search{border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:220px}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:14px}table{width:100%;border-collapse:collapse;min-width:650px}th,td{text-align:left;padding:13px 15px;border-bottom:1px solid var(--line);font-size:12px}th{font-size:10px;color:#888;letter-spacing:1px;text-transform:uppercase;background:#fafafa}tr:last-child td{border-bottom:0}.pill{display:inline-block;padding:4px 8px;border-radius:30px;background:#f0f0f0;color:#555;font-size:10px;font-weight:700}.pill.green{background:#e9f7ef;color:var(--green)}.pill.amber{background:#fff5df;color:var(--amber)}.pill.red{background:#fff0ef;color:var(--red)}.empty{text-align:center;color:#999;padding:32px}.templategrid{grid-template-columns:repeat(3,minmax(0,1fr))}.template{border:1px solid var(--line);border-radius:14px;padding:16px}.template h3{font-size:13px;margin:0 0 6px}.template p{font-size:11px;color:var(--muted);min-height:34px;margin:0 0 14px}.toast{position:fixed;bottom:22px;right:22px;background:#111;color:#fff;padding:12px 16px;border-radius:11px;box-shadow:var(--shadow);z-index:20;font-size:12px;display:none}.modalback{position:fixed;inset:0;background:#0006;display:none;align-items:center;justify-content:center;padding:20px;z-index:10}.modal{background:#fff;border-radius:18px;padding:22px;width:min(560px,100%);max-height:85vh;overflow:auto}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.modalhead h2{font-size:18px;margin:0}.mobilehead{display:none}.note{background:#f7f7f7;border-radius:12px;padding:13px;color:#666;font-size:11px}.checkrow{display:flex;align-items:center;gap:8px;font-size:12px;color:#555}.checkrow input{width:auto}
+@media(max-width:950px){.sidebar{width:210px}.main{margin-left:210px}.content{padding:25px}.stats{grid-template-columns:repeat(2,1fr)}.quickgrid,.templategrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){.sidebar{position:fixed;inset:auto 0 0;width:100%;height:66px;border-right:0;border-top:1px solid var(--line);padding:5px 7px;background:#fff}.brand,.navlabel,.sidebottom{display:none}.nav{height:100%;display:flex;justify-content:space-around;align-items:center}.nav button{flex:1;display:flex;flex-direction:column;gap:2px;padding:6px 2px;font-size:9px;border-radius:8px}.nav .ico{font-size:17px}.main{margin-left:0;padding-bottom:70px}.topbar{height:58px;padding:0 17px}.content{padding:23px 16px}.heading{font-size:25px}.stats{gap:9px;margin:18px 0}.card{padding:15px}.statnum{font-size:25px}.split{grid-template-columns:1fr}.quickgrid,.templategrid{grid-template-columns:repeat(2,minmax(0,1fr))}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.topright .topstatus{display:none}.search{min-width:0;width:100%}.toolbar{align-items:stretch}.toolbar .actions{width:100%}.toolbar .btn{flex:1}}
+.refbox{grid-column:1/-1;border:1px solid var(--line);border-radius:14px;padding:14px;background:#fcfcfc}.refbox h3{margin:0 0 3px;font-size:13px}.thumb{width:32px;height:32px;object-fit:cover;border-radius:6px}.att{display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:10px;padding:6px 9px;font-size:11px;width:100%}.att span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.att a,.att button{font-size:11px;color:#111;background:none;border:0;text-decoration:underline;padding:2px}.acc{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:9px 11px;margin-top:8px;font-size:12px}.stat{font-size:12px;padding:10px;border-radius:10px;background:#f6f6f6}.stat.ok{background:#e9f7ef;color:var(--green)}.stat.bad{background:#fff0ef;color:var(--red)}.mailbox{border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:14px}.mailbox input,.mailbox textarea{width:100%;border:1px solid #e4e4e4;border-radius:10px;padding:10px;margin:6px 0}.mailbox textarea{min-height:170px}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="brandmark">SZ</div><div><strong>SANZONE</strong><small>SMART EMAIL MANAGER</small></div></div>
+  <div class="navlabel">WORKSPACE</div>
+  <nav class="nav">
+    <button class="active" data-page="dashboard"><span class="ico">▦</span>Dashboard</button>
+    <button data-page="compose"><span class="ico">✎</span>Create Email</button>
+    <button data-page="complaints"><span class="ico">▤</span>My Complaints</button>
+    <button data-page="templates"><span class="ico">▧</span>Templates</button>
+    <button data-page="reply"><span class="ico">✉</span>Smart Reply</button>
+    <button data-page="settings"><span class="ico">⚙</span>Settings</button>
+  </nav>
+  <div class="sidebottom">Private workspace · Data saved in this browser<br><br>v2.0 · SANZONE</div>
+</aside>
+<main class="main">
+<header class="topbar"><div class="crumb" id="crumb">Workspace / Dashboard</div><div class="topright"><span class="topstatus pill green">● Local workspace</span><div class="avatar" id="avatar">S</div></div></header>
+<div class="content">
+<section class="page active" id="page-dashboard">
+  <div class="eyebrow">YOUR WORKSPACE</div><h1 class="heading">Good to see you<span id="helloName"></span>.</h1><p class="sub">Prepare clear, natural complaint emails and keep every case organised.</p>
+  <div class="grid stats">
+    <div class="card"><div class="statlabel">Total complaints</div><div class="statnum" id="statTotal">0</div><div class="statfoot">Saved in this browser</div></div>
+    <div class="card"><div class="statlabel">Pending cases</div><div class="statnum" id="statPending">0</div><div class="statfoot">Awaiting a response</div></div>
+    <div class="card"><div class="statlabel">Escalated cases</div><div class="statnum" id="statEscalated">0</div><div class="statfoot">L2 or L3</div></div>
+    <div class="card"><div class="statlabel">Resolved cases</div><div class="statnum" id="statResolved">0</div><div class="statfoot">Marked resolved</div></div>
+  </div>
+  <div class="grid split">
+    <div class="card"><div class="toolbar"><h2 class="sectiontitle">Start a new email</h2><button class="btn secondary" onclick="go('compose')">Open composer ↗</button></div>
+      <div class="grid quickgrid">
+        <div class="quick" onclick="startTemplate('Credit Bureau','Incorrect active loan account')"><div class="qico">◈</div><b>Credit bureau</b><span>CIBIL · Experian · CRIF</span></div>
+        <div class="quick" onclick="startTemplate('Loan','Loan closure / NOC request')"><div class="qico">₹</div><b>Loan issue</b><span>Closure · NOC · EMI</span></div>
+        <div class="quick" onclick="startTemplate('Finance','Wrong charges / refund')"><div class="qico">▤</div><b>Finance</b><span>Charges · Refund · Account</span></div>
+        <div class="quick" onclick="startTemplate('Laptop DOA','Laptop DOA / replacement')"><div class="qico">▣</div><b>Laptop DOA</b><span>Replacement · Warranty</span></div>
+        <div class="quick" onclick="startTemplate('Personal Issues','Service complaint')"><div class="qico">♙</div><b>Personal issue</b><span>Customer service</span></div>
+        <div class="quick" onclick="go('compose')"><div class="qico">＋</div><b>Custom email</b><span>Write your own issue</span></div>
+      </div>
+    </div>
+    <div class="card"><h2 class="sectiontitle">A simple workflow</h2>
+      <div style="display:grid;gap:17px">
+        <div><b>01 · Explain the issue</b><div class="hint">Enter the facts in your own words.</div></div>
+        <div><b>02 · Review the draft</b><div class="hint">Edit the email and attach relevant proof.</div></div>
+        <div><b>03 · Send with approval</b><div class="hint">Copy, open your email app, or send directly with a connected Gmail account.</div></div>
+        <div><b>04 · Track & escalate</b><div class="hint">Record replies and prepare L1, L2 or L3 follow-ups.</div></div>
+      </div>
+      <div class="note" style="margin-top:20px">Your drafts and complaint records stay in this browser on this device. Export a backup regularly.</div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px"><div class="toolbar"><h2 class="sectiontitle">Recent complaints</h2><button class="btn ghost" onclick="go('complaints')">View all →</button></div><div id="recentTable"></div></div>
+</section>
+
+<section class="page" id="page-compose">
+  <div class="eyebrow">EMAIL WORKSHOP</div><h1 class="heading">Create an email</h1><p class="sub">Tell us what happened. Review every detail before sending.</p>
+  <div class="grid split">
+    <div class="card">
+      <div class="formgrid">
+        <div class="field"><label>Category</label><select id="category"><option>Credit Bureau</option><option>Finance</option><option>Loan</option><option>Credit Card</option><option>Banking</option><option>Personal Issues</option><option>Laptop DOA</option><option>Warranty</option><option>E-commerce</option><option>Telecom</option><option>Insurance</option><option>Other</option></select></div>
+        <div class="field"><label>Company / recipient</label><input id="company" placeholder="e.g. TransUnion CIBIL"></div>
+        <div class="field"><label>Recipient email (optional)</label><input id="recipient" type="email" placeholder="official support email"></div>
+        <div class="field"><label>Complaint / reference ID</label><input id="refid" placeholder="If already available"></div>
+        <div class="field"><label>Specific issue type</label><select id="ctype"></select><span class="hint">Matching reference fields appear automatically.</span></div><div class="field"><label>Follow-up date</label><input id="followUp" type="date"></div><div class="field full"><label>Private notes</label><input id="notes" placeholder="Only for you, never put in the email"></div><div class="refbox"><h3>Smart Reference Details</h3><div class="hint" style="margin-bottom:12px">Fill only what you have. Empty fields are left out of the email. Masked / last-4 numbers are enough, never full card, PAN or Aadhaar numbers.</div><div class="formgrid" id="refFields"></div><div class="actions" style="margin-top:12px"><button class="btn secondary" type="button" id="refill">↻ Put these details in the email</button></div></div><div class="field full"><label>What happened? (your own words)</label><textarea id="issue" placeholder="Example: My loan was closed in August, but my credit report still shows it as active..."></textarea><div class="hint">Only enter facts you can confirm. Do not share OTP, passwords or full card details.</div></div>
+        <div class="field"><label>What outcome do you want?</label><select id="request"><option value="Please investigate the matter and correct the records.">Investigate and correct the records</option><option value="Please close the account and provide written confirmation.">Close account and provide confirmation</option><option value="Please remove the incorrect enquiry after verifying it.">Review incorrect enquiry</option><option value="Please process the eligible refund.">Refund</option><option value="Please arrange a replacement or advise the next steps.">Replacement</option><option value="Please share the status and expected resolution timeline.">Status update</option><option value="Please provide the NOC and loan closure confirmation.">NOC / loan closure confirmation</option></select></div>
+        <div class="field"><label>Writing tone</label><select id="tone"><option value="natural">Natural & polite</option><option value="professional">Professional</option><option value="firm">Firm but respectful</option><option value="strong">Strong escalation</option></select></div>
+        <div class="field full"><label>Escalation level</label><div class="levelrow"><button class="level selected" data-level="L1" type="button"><b>L1 · Initial</b><small>First complaint</small></button><button class="level" data-level="L2" type="button"><b>L2 · Follow-up</b><small>Pending response</small></button><button class="level" data-level="L3" type="button"><b>L3 · Escalation</b><small>Higher authority</small></button></div></div>
+        <div class="field full"><label>Supporting documents</label><div class="drop">＋ Add files (PDF, JPG, PNG, DOC, DOCX)<br><input id="files" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"></div><div class="filelist" id="filelist"></div><div class="hint">PDF, JPG, PNG, DOC, DOCX · max 15 MB total. Files are attached automatically when you send through Gmail.</div></div>
+        <div class="field full actions"><button class="btn" id="generate">Generate natural email →</button><button class="btn secondary" id="clear">Clear form</button></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="toolbar"><h2 class="sectiontitle">Email preview</h2><span class="pill">Editable</span></div>
+      <div class="field"><label>Send from (Gmail)</label><select id="fromSel"></select><span class="hint" id="fromHint"></span></div><div class="field" style="margin-top:12px"><label>Subject</label><input id="subject" placeholder="Your email subject"></div>
+      <div class="field" style="margin-top:12px"><label>Email body</label><textarea id="body" class="editor" placeholder="Your email draft will appear here. You can edit it freely."></textarea></div>
+      <div class="actions" style="margin-top:13px"><button class="btn" id="copy">Copy email</button><button class="btn secondary" id="mailto">Open email app</button><button class="btn secondary" id="save">Save complaint</button><button class="btn" id="gsend">Send via Gmail</button></div>
+      <p class="hint" style="margin-top:12px">Always check names, dates, account details and attachments. The draft does not send itself.</p>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="page-complaints">
+  <div class="eyebrow">CASE MANAGEMENT</div><h1 class="heading">My complaints</h1><p class="sub">Keep a record of every email, response and escalation.</p>
+  <div class="toolbar"><input class="search" id="caseSearch" placeholder="Search company, category or reference…"><div class="actions"><button class="btn secondary" onclick="exportData()">Export backup</button><button class="btn" onclick="go('compose')">＋ New complaint</button></div></div>
+  <div class="tablewrap" id="allTable"></div>
+</section>
+
+<section class="page" id="page-templates">
+  <div class="eyebrow">READY-MADE LIBRARY</div><h1 class="heading">Email templates</h1><p class="sub">Choose from 25+ practical email formats. Replace every [placeholder] with verified details before sending.</p>
+  <div class="grid templategrid" id="templateList"></div>
+</section>
+
+<section class="page" id="page-settings">
+  <div class="eyebrow">PREFERENCES</div><h1 class="heading">Settings</h1><p class="sub">Set up your signature and protect your local records.</p>
+  <div class="grid split">
+    <div class="card"><h2 class="sectiontitle">Personal profile & sending email</h2><p class="hint" style="margin:-6px 0 14px">Apna default email ID yahan update karein. Yeh profile setting hai; actual From account aapke Gmail / Mail app mein select hota hai.</p><div class="formgrid">
+      <div class="field full"><label>Your full name</label><input id="profileName" placeholder="Your name"></div>
+      <div class="field"><label>Default sending email ID</label><input id="profileEmail" type="email" placeholder="you@example.com" autocomplete="email"><span class="hint">Yahan email ID kabhi bhi change karke Save Profile karein. Email bhejte waqt mail app mein sender account select/verify karein.</span></div>
+      <div class="field"><label>Alternate email ID</label><input id="pAlt" type="email" placeholder="optional"></div><div class="field"><label>Mobile number</label><input id="pMobile" inputmode="tel" placeholder="10 digits"></div><div class="field"><label>Preferred language</label><select id="profileLang"><option>English</option><option>Hindi</option><option>Marathi</option><option>Hindi + English</option></select></div>
+      <div class="field full"><label>Email signature / contact details</label><textarea id="signature" placeholder="Regards,&#10;Your name"></textarea></div>
+      <div class="field full"><button class="btn" onclick="saveProfile()">Save profile & email ID</button></div>
+    </div></div>
+    <div class="card"><h2 class="sectiontitle">Data & privacy</h2><p class="hint">This standalone version stores complaint records in your browser's local storage. It does not upload your information to a server.</p><div class="actions" style="margin:16px 0"><button class="btn secondary" onclick="exportData()">Download backup</button><label class="btn secondary" for="importFile">Import backup</label><input id="importFile" type="file" accept=".json" hidden></div><div class="note">Do not upload unnecessary identity documents. Never store OTPs, passwords, PINs or complete card numbers in complaint notes. Use a secure device and keep backups protected.</div><button class="btn danger" style="margin-top:18px" onclick="clearAll()">Delete all local data</button></div>
+  </div>
+  <div class="card" style="margin-top:16px" id="gmailCard"><div class="toolbar"><h2 class="sectiontitle">Gmail accounts</h2><span class="pill" id="gStatus">Checking…</span></div><p class="hint">Direct sending uses Google OAuth through your SANZONE backend. Gmail passwords are never asked for. Access tokens stay encrypted on the server, never in this page or browser storage.</p><div id="gList"></div><div class="actions" style="margin-top:12px"><button class="btn" id="gConnect">＋ Connect Gmail account</button></div><div class="note" style="margin-top:14px"><b>Where is data stored?</b> Complaints, drafts and profile stay in this browser (local). When you press Send, the email, subject and attachments go to your backend only to hand them to Gmail; they are not kept there. Setup steps are in README.</div></div>
+</section>
+<section class="page" id="page-reply"><div class="eyebrow">SMART REPLY ASSISTANT</div><h1 class="heading">Understand a company's reply</h1><p class="sub">Paste their reply. You get a simple explanation, the action needed and ready follow-up emails. It only reads what is written, it never adds facts or legal claims.</p><div class="card"><div class="formgrid"><div class="field"><label>Company name (optional)</label><input id="rpCompany"></div><div class="field"><label>Open complaint (optional)</label><select id="rpCase"></select></div><div class="field full"><label>Company's reply</label><textarea id="rpText" placeholder="Paste the full reply here…"></textarea></div><div class="field full actions"><button class="btn" id="rpGo">Explain this reply →</button></div></div></div><div id="rpOut"></div></section>
+</div></main></div>
+<div class="toast" id="toast"></div>
+<div class="modalback" id="caseModal"><div class="modal"><div class="modalhead"><h2 id="modalTitle">Complaint details</h2><button class="btn secondary" onclick="closeModal()">Close</button></div><div id="modalContent"></div></div></div>
+<script>
+const $=id=>document.getElementById(id);
+const KEY='sanzone_v1_data';
+let db=JSON.parse(localStorage.getItem(KEY)||'{"cases":[],"profile":{}}');
+let level='L1', selectedFiles=[];
+const templates=[
+['Credit Bureau','Loan closed but showing active','The loan has been closed, but it is still appearing as active in my credit report.','Request to Update Loan Account Status in My Credit Report',`Dear Team,
+
+I recently checked my credit report and noticed that the loan account mentioned below is still showing as active, although the loan has been closed.
+
+Lender name: [LENDER NAME]
+Loan account (last 4 digits): [XXXX]
+Date of closure: [DD/MM/YYYY]
+Closure / NOC reference: [REFERENCE, IF AVAILABLE]
+
+Could you please verify the information with the concerned lender and update the account status in my credit report, if the records confirm that it has been closed?
+
+I have attached the available closure proof for your reference. Please let me know if any other document or information is required.
+
+I would appreciate an update on the dispute and the expected resolution timeline.
+
+Regards,
+[YOUR NAME]`],
+['Credit Bureau','Incorrect loan balance / overdue','The balance or overdue amount in my credit report does not match my records.','Request to Investigate Incorrect Loan Balance / Overdue in Credit Report',`Dear Team,
+
+While reviewing my credit report, I noticed that the balance / overdue amount reported for one of my loan accounts does not appear to be correct.
+
+Lender name: [LENDER NAME]
+Loan account (last 4 digits): [XXXX]
+Amount shown in report: [AMOUNT]
+Amount according to my records: [AMOUNT]
+Relevant payment / closure date: [DATE]
+
+Please investigate this discrepancy with the reporting lender and update the information if an error is confirmed. I have attached the relevant payment records / statement for verification.
+
+Kindly share the dispute reference number and let me know if anything further is needed from my side.
+
+Regards,
+[YOUR NAME]`],
+['Credit Bureau','Unrecognised credit enquiry','A credit enquiry appears in my report that I do not recognise.','Request to Investigate an Unrecognised Credit Enquiry',`Dear Team,
+
+I was checking my credit report and noticed a credit enquiry that I do not recognise.
+
+Enquiry date: [DATE]
+Member / institution name shown: [NAME]
+Enquiry purpose shown: [PURPOSE, IF SHOWN]
+
+I do not recall submitting an application to this institution on that date. Could you please verify the enquiry details and advise which member institution reported it?
+
+If the enquiry is found to have been reported incorrectly or without a valid basis, please guide me on the correction process. I have attached the relevant report page for reference.
+
+Please confirm the complaint reference number and next steps.
+
+Regards,
+[YOUR NAME]`],
+['Credit Bureau','Duplicate loan account in report','The same loan appears more than once in my credit report.','Request to Review a Duplicate Loan Account in Credit Report',`Dear Team,
+
+I noticed that what appears to be the same loan account is listed more than once in my credit report.
+
+Lender name: [LENDER NAME]
+Account details shown: [LAST 4 DIGITS / MASKED DETAILS]
+Report entries / dates: [DETAILS]
+
+Could you please check whether these entries relate to separate facilities or whether the same account has been reported twice? If it is a duplicate reporting error, please arrange for the information to be corrected after verification with the lender.
+
+I have attached the relevant report pages to help with your review.
+
+Please share an update and the dispute reference number.
+
+Regards,
+[YOUR NAME]`],
+['Credit Bureau','Wrong personal details in report','My name, address, date of birth or contact details appear incorrectly.','Request to Correct Personal Details in Credit Report',`Dear Team,
+
+I reviewed my credit report and found that some of my personal details appear to be incorrect.
+
+Detail shown incorrectly: [DETAIL]
+Correct detail: [CORRECT DETAIL]
+
+Please let me know the documents required to verify and correct this information. I can provide the necessary identity or address proof through your approved and secure submission process.
+
+Kindly confirm receipt of this request and share the expected timeline for the correction.
+
+Regards,
+[YOUR NAME]`],
+['Credit Bureau','Follow-up on pending dispute','I have already raised a dispute but have not received a clear update.','Follow-up on Pending Credit Report Dispute – [REFERENCE ID]',`Dear Team,
+
+I am following up on the dispute I raised regarding my credit report.
+
+Previous dispute / complaint ID: [REFERENCE ID]
+Date of submission: [DATE]
+Issue raised: [SHORT DESCRIPTION]
+
+I have not yet received a clear resolution or an update on the action taken. Could you please check the current status and let me know whether any information is pending from my side?
+
+If the matter is still under review, please share the expected completion date.
+
+Thank you for your assistance.
+
+Regards,
+[YOUR NAME]`],
+['Credit Bureau','Request dispute investigation outcome','I need the outcome and details of the investigation for my credit report dispute.','Request for Written Outcome of Credit Report Dispute',`Dear Team,
+
+I am writing to request an update and written outcome for my credit report dispute.
+
+Dispute reference: [REFERENCE ID]
+Date raised: [DATE]
+Issue: [ISSUE]
+
+Please share the findings of the investigation, including the response received from the concerned lender / member institution and any correction made to my credit report.
+
+If the information has not been changed, please explain the reason and advise what further documents or steps are required.
+
+Regards,
+[YOUR NAME]`],
+['Loan','Loan closure confirmation and NOC','The loan has been repaid and I need written closure confirmation and NOC.','Request for Loan Closure Confirmation and No Objection Certificate',`Dear Team,
+
+I have repaid the outstanding amount on my loan and would like to receive written confirmation that the loan account has been fully closed.
+
+Loan type: [LOAN TYPE]
+Loan account (last 4 digits): [XXXX]
+Payment / closure date: [DATE]
+Payment reference: [REFERENCE]
+
+Please confirm whether any amount or formal step is still pending. If the account is fully settled, kindly issue the No Objection Certificate (NOC) / loan closure letter and update the account status in your records and with the credit bureaus.
+
+Please let me know the expected timeline.
+
+Regards,
+[YOUR NAME]`],
+['Loan','Loan still active after closure','My loan account continues to show active after repayment / closure.','Request to Correct Loan Status After Repayment',`Dear Team,
+
+I have noticed that my loan account is still showing as active, even though I completed the repayment / closure process.
+
+Loan account (last 4 digits): [XXXX]
+Closure date: [DATE]
+NOC / closure reference: [REFERENCE]
+
+Could you please check your records and confirm the current status of the account? If the loan has been closed, please update the status with all relevant credit bureaus and share written confirmation.
+
+I have attached the available proof for your reference.
+
+Regards,
+[YOUR NAME]`],
+['Loan','Foreclosure statement request','I need the current foreclosure amount and payment instructions.','Request for Loan Foreclosure Statement',`Dear Team,
+
+I am considering foreclosing my loan and request you to share the latest foreclosure statement.
+
+Loan account (last 4 digits): [XXXX]
+Preferred payment date: [DATE]
+
+Please provide the total amount payable, a breakup of principal, interest and applicable charges, the validity date of the quote, and the approved payment method.
+
+Kindly also explain the steps for obtaining the NOC and closure confirmation after payment.
+
+Regards,
+[YOUR NAME]`],
+['Loan','NACH / auto-debit cancellation','I need confirmation about cancellation of the mandate after loan closure.','Request to Cancel / Confirm Cancellation of NACH Mandate',`Dear Team,
+
+I am writing regarding the NACH / auto-debit mandate linked to my loan account.
+
+Loan account (last 4 digits): [XXXX]
+Bank account (last 4 digits only): [XXXX]
+Loan status: [CLOSED / OTHER]
+
+Please confirm whether the mandate has been cancelled. If it is still active and no further debit is due, kindly initiate the applicable cancellation process and share written confirmation or the mandate reference.
+
+Please let me know if I need to contact my bank separately.
+
+Regards,
+[YOUR NAME]`],
+['Loan','Loan account statement request','I need a complete loan statement and payment history.','Request for Loan Account Statement and Repayment History',`Dear Team,
+
+Could you please provide the loan account statement for the period [FROM DATE] to [TO DATE]?
+
+Loan account (last 4 digits): [XXXX]
+
+Please include the disbursement details, EMI / payment entries, charges, outstanding balance and any overdue amount, if applicable.
+
+If there are any charges or entries that need clarification, please include the relevant details so I can reconcile them with my records.
+
+Regards,
+[YOUR NAME]`],
+['Loan','Incorrect EMI / payment not updated','A payment has been made but is not reflected correctly in my loan account.','Request to Trace Payment and Update Loan Account',`Dear Team,
+
+I made a payment towards my loan, but it is not reflecting correctly in my loan account.
+
+Loan account (last 4 digits): [XXXX]
+Payment date: [DATE]
+Amount: [AMOUNT]
+Transaction reference: [UTR / TRANSACTION ID]
+
+Please trace the transaction and confirm whether the payment has been received. If it has been received, kindly update the loan ledger and correct any related overdue or late-payment entry, if applicable.
+
+I have attached the payment proof for verification.
+
+Regards,
+[YOUR NAME]`],
+['Finance','Unexplained charges on account','I noticed charges on my account that I do not understand.','Request for Explanation and Review of Charges',`Dear Team,
+
+I was reviewing my account statement and noticed a charge that I do not recognise / do not understand.
+
+Account (last 4 digits): [XXXX]
+Charge date: [DATE]
+Amount: [AMOUNT]
+Description shown: [DESCRIPTION]
+
+Please share a clear breakup and the reason for applying this charge. If it was applied incorrectly, kindly arrange a reversal and confirm once the correction is completed.
+
+Please also let me know if any action is required from my side.
+
+Regards,
+[YOUR NAME]`],
+['Finance','Account closure request','I would like to understand the process and requirements to close my account.','Request for Account Closure – Process and Requirements',`Dear Team,
+
+I would like to request closure of my [ACCOUNT TYPE] account.
+
+Account number (last 4 digits): [XXXX]
+Registered mobile / email: [AS REQUIRED]
+
+Please confirm the closure procedure, any pending balance or charges, and whether I need to visit a branch or submit a form. Kindly also explain how any remaining balance will be paid to me.
+
+Please do not treat this email as confirmation that all closure requirements have been completed. I request the official steps and written confirmation once the account is closed.
+
+Regards,
+[YOUR NAME]`],
+['Finance','Refund not received','A refund was approved / initiated but has not reached me.','Follow-up Regarding Refund Not Received',`Dear Team,
+
+I am following up on a refund that was expected for my transaction.
+
+Order / account reference: [REFERENCE]
+Refund amount: [AMOUNT]
+Refund initiated date: [DATE]
+Original transaction reference: [REFERENCE]
+
+The amount has not been credited to my account yet. Could you please check the refund status and share the transaction reference / ARN / UTR, if it has been processed?
+
+If the refund is still pending, please let me know the reason and expected credit date.
+
+Regards,
+[YOUR NAME]`],
+['Banking','Unauthorised transaction enquiry','I noticed a transaction that I do not recognise.','Urgent: Request to Investigate an Unrecognised Transaction',`Dear Team,
+
+I noticed a transaction in my account that I do not recognise and request your help in checking it.
+
+Transaction date: [DATE]
+Amount: [AMOUNT]
+Description / reference: [DETAILS]
+Account (last 4 digits only): [XXXX]
+
+Please guide me through the official process to report and dispute this transaction, secure the account if necessary, and obtain a complaint reference number.
+
+I have not included any PIN, OTP, password or full card details in this email. Please advise the secure channel for any further verification.
+
+Regards,
+[YOUR NAME]`],
+['Credit Card','Credit card closure request','I want to close my credit card and need the closure requirements.','Request for Credit Card Closure and Confirmation',`Dear Team,
+
+I would like to request closure of my credit card.
+
+Card (last 4 digits only): [XXXX]
+Registered mobile / email: [DETAIL]
+
+Please confirm the outstanding amount, any pending EMI or recurring payment, reward point implications and the steps required to close the card.
+
+Once all requirements are completed, kindly process the closure and provide written confirmation. Please also confirm the applicable timeline for updating the card status with the credit bureaus.
+
+Regards,
+[YOUR NAME]`],
+['Credit Card','Incorrect credit card charge','A charge on my card statement appears incorrect.','Dispute of Incorrect Credit Card Charge',`Dear Team,
+
+I am writing to dispute / seek clarification on a charge appearing on my credit card statement.
+
+Card (last 4 digits only): [XXXX]
+Transaction date: [DATE]
+Amount: [AMOUNT]
+Merchant / description: [DETAILS]
+
+I do not recognise this charge / believe the amount is incorrect for the following reason: [EXPLAIN].
+
+Please register this as a dispute, advise whether any further action is required, and share the complaint reference number and expected timeline.
+
+Regards,
+[YOUR NAME]`],
+['Laptop DOA','Laptop dead on arrival – replacement','My newly purchased laptop is not working from the first use.','Request for DOA Inspection and Replacement of Laptop',`Dear Support Team,
+
+I purchased a laptop recently, but it has not been working properly from the first use.
+
+Brand / model: [MODEL]
+Invoice number: [INVOICE]
+Purchase date: [DATE]
+Serial number: [SERIAL, IF REQUIRED]
+Issue observed: [DESCRIBE THE FAULT]
+
+Please guide me through the DOA inspection / verification process and confirm the applicable replacement or resolution procedure. I have the invoice and can provide photos or a video showing the issue.
+
+Kindly arrange an inspection and share the next steps and expected timeline.
+
+Regards,
+[YOUR NAME]`],
+['Laptop DOA','Laptop replacement delayed','My laptop replacement request has been pending without a clear update.','Follow-up on Pending Laptop Replacement Request',`Dear Support Team,
+
+I am following up on my laptop replacement request.
+
+Brand / model: [MODEL]
+Invoice number: [INVOICE]
+Service / complaint ID: [ID]
+Date raised: [DATE]
+
+I have not received a clear update on the inspection or replacement status. Could you please confirm the current stage, whether anything is pending from my side, and the expected date for the next update?
+
+I would appreciate a written response so I can plan accordingly.
+
+Regards,
+[YOUR NAME]`],
+['Warranty','Warranty repair taking too long','My device has been at the service centre and I need a status update.','Request for Update on Pending Warranty Repair',`Dear Service Team,
+
+I am writing to request an update on my device submitted for warranty service.
+
+Product / model: [MODEL]
+Serial number: [SERIAL, IF REQUIRED]
+Job sheet / service ID: [ID]
+Submission date: [DATE]
+
+Please confirm the diagnosis, parts availability, work completed so far and expected delivery date. If there is a delay, kindly explain the reason and advise the available options.
+
+Regards,
+[YOUR NAME]`],
+['E-commerce','Order return pickup not completed','My return pickup has not happened despite the request being raised.','Follow-up on Pending Return Pickup',`Dear Support Team,
+
+I requested a return for my order, but the pickup has not been completed yet.
+
+Order ID: [ORDER ID]
+Return request date: [DATE]
+Product: [PRODUCT]
+Pickup status shown: [STATUS]
+
+Please check why the pickup is pending and arrange the next available pickup, if the return is eligible. Kindly confirm the revised pickup date and whether any action is required from my side.
+
+Regards,
+[YOUR NAME]`],
+['E-commerce','Wrong or damaged product received','The product delivered does not match my order / arrived damaged.','Request for Resolution – Incorrect / Damaged Product Received',`Dear Support Team,
+
+I received my order, but there is an issue with the product.
+
+Order ID: [ORDER ID]
+Product ordered: [PRODUCT]
+Issue: [WRONG ITEM / DAMAGE / MISSING ACCESSORY]
+Delivery date: [DATE]
+
+I have attached photographs of the product and packaging, along with the invoice / order details. Please review the issue and advise the eligible replacement, return or refund process.
+
+Kindly confirm the next steps.
+
+Regards,
+[YOUR NAME]`],
+['Insurance','Insurance claim status follow-up','I need an update on my pending insurance claim.','Request for Update on Insurance Claim',`Dear Claims Team,
+
+I am writing to check the status of my insurance claim.
+
+Policy number (masked): [REFERENCE]
+Claim number: [CLAIM ID]
+Date of claim: [DATE]
+Claim type: [TYPE]
+
+Please confirm the current status, whether any document or clarification is pending from my side, and the expected timeline for the next update.
+
+If the claim has been put on hold or rejected, kindly share the reason and the relevant policy clause in writing.
+
+Regards,
+[YOUR NAME]`],
+['Telecom','Incorrect bill or extra charge','My telecom bill includes a charge that I need clarified.','Request to Review Incorrect Billing / Additional Charge',`Dear Support Team,
+
+I reviewed my latest bill and noticed a charge that I do not understand.
+
+Mobile / account number (masked): [DETAIL]
+Bill period: [PERIOD]
+Amount in question: [AMOUNT]
+Charge description: [DESCRIPTION]
+
+Please explain the charge and share the applicable plan or usage details. If it has been billed incorrectly, kindly correct the bill and confirm the adjustment.
+
+Regards,
+[YOUR NAME]`],
+['Personal Issues','No response to previous complaint','I have contacted support earlier but have not received a response.','Follow-up: No Response to Previous Complaint',`Dear Team,
+
+I am following up on my earlier complaint, as I have not received a response yet.
+
+Complaint reference: [REFERENCE]
+Date of earlier email / complaint: [DATE]
+Issue: [SHORT DESCRIPTION]
+
+Could you please confirm that my complaint has been received and let me know who is handling it? I would appreciate a clear update and an expected resolution timeline.
+
+Regards,
+[YOUR NAME]`],
+['Personal Issues','Request for written confirmation','I need written confirmation of the action taken on my request.','Request for Written Confirmation and Case Closure Details',`Dear Team,
+
+Thank you for looking into my earlier request.
+
+For my records, could you please share written confirmation of the action taken and the current status of the matter?
+
+Reference number: [REFERENCE]
+Action requested: [DETAIL]
+Date: [DATE]
+
+If the matter is considered resolved, please confirm the effective date and share any relevant closure document or reference.
+
+Regards,
+[YOUR NAME]`],
+['Other','General complaint to customer support','I need to raise a complaint and request a clear resolution.','Request for Assistance and Resolution of My Complaint',`Dear Customer Support Team,
+
+I am writing to bring an issue to your attention and request your assistance.
+
+Product / service / account: [DETAIL]
+Reference number: [IF AVAILABLE]
+Date of issue: [DATE]
+
+What happened:
+[EXPLAIN THE ISSUE IN CLEAR, CHRONOLOGICAL ORDER]
+
+What I am requesting:
+[STATE THE OUTCOME YOU WANT]
+
+I have attached the relevant documents for your reference. Please register the complaint, share the complaint number and let me know the expected timeline for a response.
+
+Regards,
+[YOUR NAME]`]
+];
+function persist(){localStorage.setItem(KEY,JSON.stringify(db));renderStats();renderTables()}
+function toast(msg){$('toast').textContent=msg;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',2600)}
+function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));$('page-'+page).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('crumb').textContent='Workspace / '+({dashboard:'Dashboard',compose:'Create Email',complaints:'My Complaints',templates:'Templates',settings:'Settings'}[page]);if(page==='complaints')renderTables();window.scrollTo(0,0)}
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
+document.querySelectorAll('.level').forEach(b=>b.addEventListener('click',()=>{level=b.dataset.level;document.querySelectorAll('.level').forEach(x=>x.classList.toggle('selected',x===b))}));
+function startTemplate(cat,title){go('compose');$('category').value=cat;let t=templates.find(x=>x[1]===title);if(t){$('issue').value=t[2];}else $('issue').value='';$('company').focus()}
+function generate(){
+ const cat=$('category').value,company=$('company').value.trim()||'Customer Support Team',issue=$('issue').value.trim(),req=$('request').value,tone=$('tone').value,ref=$('refid').value.trim(),name=db.profile.name||'Your Name';
+ if(!issue){toast('Please describe what happened first.');$('issue').focus();return}
+ let subjectMap={'Credit Bureau':'Request to Review and Correct My Credit Report','Loan':'Request for Assistance Regarding My Loan Account','Finance':'Request for Review of an Account Issue','Credit Card':'Request for Assistance with My Credit Card','Banking':'Request for Assistance with My Bank Account','Personal Issues':'Request for Assistance Regarding a Service Issue','Laptop DOA':'Request for Assistance with a Defective Laptop','Warranty':'Request for Review of a Warranty Issue','E-commerce':'Follow-up Regarding My Order / Refund','Telecom':'Request for Resolution of a Service Issue','Insurance':'Request for Review of My Policy / Claim','Other':'Request for Assistance'};
+ let subject=subjectMap[cat]||'Request for Assistance';if(level==='L2')subject='Follow-up: '+subject;if(level==='L3')subject='Escalation: '+subject;
+ let opening=tone==='firm'?'I am writing to follow up on an issue that needs your attention.':tone==='strong'?'I am escalating this matter because it remains unresolved and I need a clear response.':tone==='professional'?'I am contacting you to request your assistance with the matter outlined below.':'I am reaching out because I noticed an issue and would appreciate your help in looking into it.';
+ let middle=level==='L1'?'I noticed the following issue:':level==='L2'?'I had previously raised this concern, but it is still awaiting a resolution. The details are below:':'I have already tried to get this matter resolved through the earlier support channel. However, it remains unresolved. For reference, the details are below:';
+ let refLine=ref?'\nPrevious complaint / reference ID: '+ref+'\n':'';
+ let close=tone==='strong'?'Please review this on priority and share a clear written update, including the action taken and the expected resolution date.':tone==='firm'?'Please look into this and let me know what action will be taken and when I can expect an update.':'Please let me know if you need any further information or documents from my side. I would appreciate an update once this has been reviewed.';
+ let body='Dear '+company+',\n\n'+opening+'\n\n'+middle+'\n\n'+issue+'\n'+refLine+'\n'+req+'\n\n'+(selectedFiles.length?'I have included supporting document(s) for your reference.':'I can provide supporting documents if required.')+'\n\n'+close+'\n\nRegards,\n'+name+(db.profile.signature&&db.profile.signature.trim()!==('Regards,\n'+name)?'\n'+db.profile.signature.trim().replace(/^Regards,?\s*/i,'').replace(/^'+name+'$/,''):'');
+ if(level==='L2')body=body.replace('Dear '+company+',','Dear '+company+',\n\nI am following up on my earlier communication regarding this matter.');
+ if(level==='L3')body=body.replace('Dear '+company+',','Dear Grievance / Nodal Officer,');
+ $('subject').value=subject;$('body').value=body;toast('Draft generated. Please review and personalise it.');
+}
+$('generate').onclick=generate;
+$('clear').onclick=()=>{['company','recipient','refid','issue','subject','body'].forEach(id=>$(id).value='');$('files').value='';selectedFiles=[];renderFiles();level='L1';document.querySelectorAll('.level').forEach((b,i)=>b.classList.toggle('selected',i===0))};
+$('files').addEventListener('change',e=>{selectedFiles=[...e.target.files];renderFiles()});
+function renderFiles(){$('filelist').innerHTML=selectedFiles.map(f=>`<span class="filepill">${escapeHtml(f.name)} · ${Math.ceil(f.size/1024)} KB</span>`).join('')}
+$('copy').onclick=async()=>{let txt='Subject: '+$('subject').value+'\n\n'+$('body').value;if(!$('body').value.trim()){toast('Generate or write an email first.');return}try{await navigator.clipboard.writeText(txt);toast('Email copied to clipboard.')}catch(e){$('body').focus();$('body').select();toast('Select and copy the email text.')}};
+$('mailto').onclick=()=>{if(!$('body').value.trim()){toast('Generate or write an email first.');return}let to=$('recipient').value.trim(),url='mailto:'+encodeURIComponent(to)+'?subject='+encodeURIComponent($('subject').value)+'&body='+encodeURIComponent($('body').value);location.href=url;toast('Email app opening. Select the required From account there; attachments must be added manually.')};
+$('save').onclick=async()=>{if(!$('body').value.trim()){toast('Generate or write an email first.');return}let id='SZ-'+Date.now().toString().slice(-8),item={id,category:$('category').value,company:$('company').value.trim()||'Not specified',recipient:$('recipient').value.trim(),ref:$('refid').value.trim(),level,subject:$('subject').value,body:$('body').value,status:'Draft',date:new Date().toISOString(),files:selectedFiles.map(f=>({name:f.name,size:f.size,type:f.type}))};db.cases.unshift(item);persist();toast('Complaint saved: '+id);go('complaints')};
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function statusClass(s){return s==='Resolved'?'green':s==='Pending'?'amber':s==='Rejected'?'red':''}
+function tableHTML(items){if(!items.length)return '<div class="empty">No complaints saved yet. Create your first email to get started.</div>';return '<table><thead><tr><th>Company / case</th><th>Category</th><th>Level</th><th>Status</th><th>Date</th><th>Action</th></tr></thead><tbody>'+items.map(c=>`<tr><td><b>${escapeHtml(c.company)}</b><div class="hint">${escapeHtml(c.id)} ${c.ref?'· Ref: '+escapeHtml(c.ref):''}</div></td><td>${escapeHtml(c.category)}</td><td><span class="pill">${escapeHtml(c.level)}</span></td><td><span class="pill ${statusClass(c.status)}">${escapeHtml(c.status)}</span></td><td>${new Date(c.date).toLocaleDateString()}</td><td><button class="btn secondary" style="padding:6px 9px" onclick="viewCase('${c.id}')">Open</button></td></tr>`).join('')+'</tbody></table>'}
+function renderTables(){$('recentTable').innerHTML=tableHTML(db.cases.slice(0,5));let q=($('caseSearch')?.value||'').toLowerCase();$('allTable').innerHTML=tableHTML(db.cases.filter(c=>(c.company+' '+c.category+' '+c.id+' '+c.ref).toLowerCase().includes(q)))}
+$('caseSearch').addEventListener('input',renderTables);
+function renderStats(){$('statTotal').textContent=db.cases.length;$('statPending').textContent=db.cases.filter(c=>['Draft','Sent','Pending','Replied'].includes(c.status)).length;$('statEscalated').textContent=db.cases.filter(c=>c.level==='L2'||c.level==='L3').length;$('statResolved').textContent=db.cases.filter(c=>c.status==='Resolved').length;$('helloName').textContent=db.profile.name?' '+db.profile.name.split(' ')[0]:'';$('avatar').textContent=(db.profile.name||'S').trim().charAt(0).toUpperCase()}
+function viewCase(id){let c=db.cases.find(x=>x.id===id);if(!c)return;$('modalTitle').textContent=c.company+' · '+c.id;$('modalContent').innerHTML=`<div class="grid" style="gap:12px"><div class="hint">${escapeHtml(c.category)} · ${escapeHtml(c.level)} · ${new Date(c.date).toLocaleString()}</div><div class="field"><label>Subject</label><input id="editSub" value="${escapeHtml(c.subject)}"></div><div class="field"><label>Email body</label><textarea id="editBody" style="min-height:230px">${escapeHtml(c.body)}</textarea></div><div class="formgrid"><div class="field"><label>Status</label><select id="editStatus">${['Draft','Ready','Sent','Pending','Replied','Escalated','Resolved','Rejected','Closed'].map(s=>`<option ${c.status===s?'selected':''}>${s}</option>`).join('')}</select></div><div class="field"><label>Escalation level</label><select id="editLevel">${['L1','L2','L3'].map(s=>`<option ${c.level===s?'selected':''}>${s}</option>`).join('')}</select></div></div><div class="actions"><button class="btn" onclick="updateCase('${id}')">Save changes</button><button class="btn secondary" onclick="copyCase('${id}')">Copy email</button><button class="btn danger" onclick="deleteCase('${id}')">Delete case</button></div></div>`;$('caseModal').style.display='flex'}
+function closeModal(){$('caseModal').style.display='none'}
+function updateCase(id){let c=db.cases.find(x=>x.id===id);c.subject=$('editSub').value;c.body=$('editBody').value;c.status=$('editStatus').value;c.level=$('editLevel').value;persist();closeModal();toast('Case updated.')}
+async function copyCase(id){let c=db.cases.find(x=>x.id===id);await navigator.clipboard.writeText('Subject: '+c.subject+'\n\n'+c.body);toast('Email copied.')}
+function deleteCase(id){if(!confirm('Delete this complaint record from this browser?'))return;db.cases=db.cases.filter(x=>x.id!==id);persist();closeModal();toast('Case deleted.')}
+function renderTemplates(){$('templateList').innerHTML=templates.map((t,i)=>`<div class="template"><span class="pill">${escapeHtml(t[0])}</span><h3 style="margin-top:11px">${escapeHtml(t[1])}</h3><p>${escapeHtml(t[2])}</p><button class="btn secondary" onclick="useTemplate(${i})">Use ready-made mail →</button></div>`).join('')}
+function useTemplate(i){let t=templates[i];go('compose');$('category').value=t[0];$('issue').value=t[2];$('subject').value=t[3];$('body').value=t[4].replaceAll('[YOUR NAME]',db.profile.name||'Your Name');$('company').value='';$('refid').value='';toast('Ready-made format loaded. Replace every [placeholder] with your actual details.')}
+function saveProfile(){const email=$('profileEmail').value.trim();if(email&&!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){toast('Please enter a valid email ID.');$('profileEmail').focus();return}db.profile={name:$('profileName').value.trim(),email,language:$('profileLang').value,signature:$('signature').value};persist();toast('Profile and default email ID updated.') }
+function loadProfile(){let p=db.profile||{};$('profileName').value=p.name||'';$('profileEmail').value=p.email||'';$('profileLang').value=p.language||'English';$('signature').value=p.signature||'';renderStats()}
+function exportData(){let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='sanzone-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(a.href);toast('Backup downloaded.')}
+$('importFile').addEventListener('change',async e=>{let f=e.target.files[0];if(!f)return;try{let data=JSON.parse(await f.text());if(!Array.isArray(data.cases)||!data.profile)throw Error();if(!confirm('Import backup? This will replace current local records.'))return;db=data;persist();loadProfile();toast('Backup imported.')}catch(err){toast('That backup file is not valid.')}e.target.value=''});
+function clearAll(){if(!confirm('This permanently deletes all SANZONE records and profile saved in this browser. Export a backup first if needed.'))return;localStorage.removeItem(KEY);db={cases:[],profile:{}};persist();loadProfile();toast('Local data deleted.')}
+renderTemplates();loadProfile();persist();
+</script>
+<script>
+const FD={cibilNo:['CIBIL report / control number'],experianNo:['Experian report reference number'],crifNo:['CRIF report reference number'],equifaxNo:['Equifax report reference number'],disputeId:['Credit bureau dispute ID'],enqRef:['Credit enquiry reference number'],loanAcc:['Loan account number','masked is fine, e.g. XXXX1234'],loan4:['Loan account – last 4 digits','1234'],lender:['Lender / bank / NBFC name'],closureDate:['Loan closure date','','date'],noc:['NOC number'],payRef:['Payment transaction reference number'],prevComplaint:['Previous complaint number'],custId:['Customer ID (optional)'],regMobile:['Registered mobile number (optional)'],regEmail:['Registered email ID','','email'],enqDate:['Enquiry date','','date'],enqCompany:['Company that made the enquiry'],enqDetails:['Incorrect enquiry details'],amtShown:['Amount shown in report'],amtActual:['Amount as per my records'],brand:['Brand'],model:['Model'],serial:['Serial number'],invoice:['Invoice number'],purchaseDate:['Purchase date','','date']};
+const BUR=['disputeId','lender','loanAcc','loan4','closureDate','noc','amtShown','amtActual','prevComplaint','regEmail'];
+const SETS={'General':['prevComplaint','regEmail'],'CIBIL':['cibilNo',...BUR],'Experian':['experianNo',...BUR],'CRIF':['crifNo',...BUR],'Equifax':['equifaxNo',...BUR],'Loan Account Closure':['loanAcc','loan4','lender','closureDate','noc','payRef','prevComplaint','regEmail'],'Wrong Credit Enquiry':['enqDate','enqCompany','enqRef','enqDetails','cibilNo','prevComplaint','regEmail'],'Laptop DOA':['brand','model','serial','invoice','purchaseDate','prevComplaint','regEmail'],'Bank / Card / Finance':['lender','loan4','payRef','custId','regMobile','prevComplaint','regEmail']};
+const CD={'Credit Bureau':'CIBIL','Loan':'Loan Account Closure','Finance':'Bank / Card / Finance','Banking':'Bank / Card / Finance','Credit Card':'Bank / Card / Finance','Insurance':'Bank / Card / Finance','Laptop DOA':'Laptop DOA','Warranty':'Laptop DOA'};
+const DK='sanzone_v2_draft',EM=/^[^\s@]+@[^\s@]+\.[^\s@]+$/,OKF=/\.(pdf|jpe?g|png|docx?)$/i,MAXB=15*1024*1024;
+let refVals={},att=[],curTpl=null,curCaseId=null,sending=false,G={ok:false,accounts:[]};
+const LM=[[/closure date|date of closure|closed on/,'closureDate'],[/last 4|last four/,'loan4'],[/cibil/,'cibilNo'],[/experian/,'experianNo'],[/crif/,'crifNo'],[/equifax/,'equifaxNo'],[/dispute/,'disputeId'],[/enquiry date/,'enqDate'],[/enquiry ref/,'enqRef'],[/member|institution|enquiry by/,'enqCompany|lender'],[/lender|bank|nbfc|company/,'lender'],[/noc|closure/,'noc'],[/payment|transaction|utr/,'payRef'],[/complaint|previous/,'prevComplaint'],[/loan account|account (details|number)/,'loanAcc|loan4'],[/invoice|order/,'invoice'],[/serial/,'serial'],[/model/,'model'],[/brand/,'brand'],[/purchase/,'purchaseDate'],[/shown in|reported/,'amtShown'],[/records/,'amtActual']];
+const fv=k=>{let v=(refVals[k]||'').trim();if(v&&FD[k]&&FD[k][2]==='date'&&/^\d{4}-\d\d-\d\d$/.test(v))v=v.split('-').reverse().join('/');return v};
+function fillT(t){return t.replaceAll('[YOUR NAME]',db.profile.name||'').split('\n').map(l=>{const m=l.match(/^([^:\[\]]{2,60}):\s*\[[^\]]*\]\s*$/);if(m){const lab=m[1].toLowerCase();for(const[r,k]of LM)if(r.test(lab)){const v=k.split('|').map(fv).find(Boolean);return v?m[1]+': '+v:null}return null}return l.replace(/\s*\[[^\]]+\]/g,'')}).filter(l=>l!==null).join('\n').replace(/\n{3,}/g,'\n\n').trim()}
+function setCtype(c){$('ctype').value=SETS[c]?c:'General';renderRef()}
+function renderRef(){if(refVals.regEmail===undefined&&db.profile.email)refVals.regEmail=db.profile.email;if(refVals.regMobile===undefined&&db.profile.mobile)refVals.regMobile=db.profile.mobile;$('refFields').innerHTML=(SETS[$('ctype').value]||[]).map(k=>`<div class="field"><label>${FD[k][0]}</label><input data-k="${k}" type="${FD[k][2]||'text'}" placeholder="${escapeHtml(FD[k][1]||'')}" value="${escapeHtml(refVals[k]||'')}"></div>`).join('')}
+function refErr(){for(const k of SETS[$('ctype').value]||[]){const v=(refVals[k]||'').trim();if(!v)continue;if(k==='regEmail'&&!EM.test(v))return 'Registered email ID is not valid.';if(k==='regMobile'&&!/^(\+?91)?[6-9]\d{9}$/.test(v.replace(/[\s-]/g,'')))return 'Registered mobile number should be 10 digits.';if(FD[k][2]!=='date'&&k!=='enqDetails'&&k!=='regEmail'&&k!=='regMobile'&&!/^[A-Za-z0-9][A-Za-z0-9 \-\/_.,#:&()]{1,60}$/.test(v))return FD[k][0]+': use letters, numbers and - / only.';if(/^\d{13,19}$/.test(v.replace(/[\s-]/g,''))&&k!=='loanAcc')return FD[k][0]+' looks like a card number. Use the last 4 digits only.'}if(/\b\d{4}[ -]?\d{4}[ -]?\d{4}[ -]?\d{4}\b/.test($('issue').value))return 'Remove the full card number from the description.';return ''}
+function detailsBlock(){const L=(SETS[$('ctype').value]||[]).map(k=>fv(k)?FD[k][0].replace(' (optional)','')+': '+fv(k):'').filter(Boolean);return L.length?'Reference details:\n'+L.join('\n'):''}
+function signOff(b){const p=db.profile;let s=(p.signature||'').trim();if(!s)s='Regards,'+(p.name?'\n'+p.name:'');else if(!/^(regards|thanks|thank you|sincerely|yours)/i.test(s))s='Regards,\n'+s;return b.replace(/\n\n(Regards|Yours),?\n[\s\S]*$/,'')+'\n\n'+s}
+function generate2(){if($('refFields').querySelector(':focus'))$('refFields').querySelector(':focus').blur();const e=refErr();if(e){toast(e);return}if(!$('issue').value.trim()){generate();return}generate();curTpl=null;let b=$('body').value,i=$('issue').value.trim(),d=detailsBlock();if(d)b=b.replace(i+'\n',i+'\n\n'+d+'\n');$('body').value=signOff(b);if(!db.profile.name)toast('Tip: add your name in Settings so it appears in the email.')}
+$('generate').onclick=generate2;
+$('refill').onclick=()=>{const e=refErr();if(e){toast(e);return}if(curTpl){$('body').value=signOff(fillT(curTpl[4]));toast('Details added. Missing ones were left out.')}else generate2()};
+$('refFields').addEventListener('input',e=>{if(e.target.dataset.k)refVals[e.target.dataset.k]=e.target.value});
+$('ctype').innerHTML=Object.keys(SETS).map(k=>`<option>${k}</option>`).join('');$('ctype').onchange=renderRef;
+$('category').addEventListener('change',()=>setCtype(CD[$('category').value]||'General'));
+function guess(cat,t){return /experian/i.test(t)?'Experian':/crif/i.test(t)?'CRIF':/equifax/i.test(t)?'Equifax':/enquiry/i.test(t)?'Wrong Credit Enquiry':CD[cat]||'General'}
+function startTemplate(cat,title){go('compose');$('category').value=cat;setCtype(guess(cat,title));curTpl=null;curCaseId=null;const t=templates.find(x=>x[1]===title);$('issue').value=t?t[2]:'';$('company').focus()}
+function useTemplate(i){const t=templates[i];go('compose');curCaseId=null;$('category').value=t[0];setCtype(guess(t[0],t[1]));curTpl=t;$('issue').value=t[2];$('subject').value=t[3];$('body').value=signOff(fillT(t[4]));toast('Template loaded. Add details above and tap "Put these details in the email". Unfilled details are left out.')}
+const mk=(c,t,d,sub,intro,det,ask)=>[c,t,d,sub,`Dear Team,\n\n${intro}\n\n${det.join('\n')}\n\n${ask}\n\nRegards,\n[YOUR NAME]`];
+const bur=(n,k)=>mk('Credit Bureau',n+' correction request','Ask '+n+' to correct wrong information in the report.','Request to Correct Information in My '+n+' Report','I am writing to request a review and correction of incorrect information in my '+n+' report. The account concerned is described below.',[n+' report '+k+': [X]','Dispute ID: [X]','Lender name: [X]','Loan account (last 4 digits): [X]'],'Please verify the details with the reporting lender and correct the report if the error is confirmed. Kindly tell me if any document is needed from my side.');
+templates.push(bur('CIBIL','control number'),bur('Experian','reference number'),bur('CRIF','reference number'),
+mk('Credit Bureau','Wrong loan account status','The report shows a wrong status for my loan.','Request to Correct Wrong Loan Account Status in Credit Report','The status of the loan account below is shown incorrectly in my credit report.',['Lender name: [X]','Loan account (last 4 digits): [X]','Loan closure date: [X]','NOC number: [X]'],'Please check this with the lender and update the status if the records confirm my request. I will share closure proof if required.'),
+mk('Credit Bureau','Wrong overdue amount','Overdue amount in report is not correct.','Request to Correct Overdue Amount in Credit Report','The overdue amount reported for the loan below does not match my payment records.',['Lender name: [X]','Loan account (last 4 digits): [X]','Amount shown in report: [X]','Amount as per my records: [X]'],'Please verify the amount with the lender and correct it if an error is found.'),
+mk('Credit Bureau','Wrong loan balance','Outstanding balance in report is not correct.','Request to Correct Loan Balance in Credit Report','The outstanding balance reported for the loan below does not match my records.',['Lender name: [X]','Loan account (last 4 digits): [X]','Amount shown in report: [X]','Amount as per my records: [X]'],'Please check the balance with the lender and update the report if it is wrong.'),
+mk('Loan','NOC request','Ask the lender for the No Objection Certificate.','Request for NOC After Loan Closure','My loan has been closed and I request the No Objection Certificate (NOC) for the account below.',['Lender name: [X]','Loan account number: [X]','Loan closure date: [X]','Payment transaction reference: [X]'],'Please issue the NOC and confirm the account is closed in your records. Kindly send it to my registered email.'),
+mk('Finance','Unauthorised charges','Charges I did not agree to.','Request to Review Unauthorised Charges','I noticed charges on my account that I did not authorise. Please review them using the details below.',['Bank / company name: [X]','Payment transaction reference: [X]','Customer ID: [X]'],'Please explain the charges, reverse them if they are not valid, and confirm the action in writing.'),
+mk('Banking','Banking complaint','General bank service complaint.','Complaint Regarding Banking Service','I am raising a complaint about a service issue with my bank account, described in this email.',['Bank name: [X]','Customer ID: [X]','Previous complaint number: [X]'],'Please look into the matter, tell me what action will be taken and share a resolution date.'),
+mk('Insurance','Insurance complaint','Policy or claim complaint.','Complaint Regarding My Insurance Policy / Claim','I am raising a complaint about my insurance policy / claim, described in this email.',['Insurer name: [X]','Customer ID: [X]','Previous complaint number: [X]'],'Please review it and send a clear written response with the next steps and timeline.'),
+mk('E-commerce','E-commerce complaint','Order, delivery or refund complaint.','Complaint Regarding My Online Order','I am raising a complaint about my online order, described in this email.',['Company name: [X]','Invoice / order number: [X]','Purchase date: [X]','Previous complaint number: [X]'],'Please resolve this through a replacement or refund as applicable and confirm the timeline.'),
+mk('Telecom','Telecom complaint','Network, billing or service complaint.','Complaint Regarding My Telecom Service','I am raising a complaint about my mobile / broadband service, described in this email.',['Company name: [X]','Customer ID: [X]','Previous complaint number: [X]'],'Please fix the issue and share a written update with the resolution date.'),
+mk('Personal Issues','Grievance escalation','Escalate to a grievance / nodal officer.','Escalation of Unresolved Complaint to Grievance Officer','My complaint has not been resolved at the earlier level, so I am escalating it to you.',['Company name: [X]','Previous complaint number: [X]','Loan account (last 4 digits): [X]'],'Please review it, share the action taken and send a written response with a resolution date.'));
+renderTemplates();
+function fmtSz(n){return n>1048576?(n/1048576).toFixed(1)+' MB':Math.ceil(n/1024)+' KB'}
+function renderFiles(){$('filelist').innerHTML=att.map((f,i)=>{const u=URL.createObjectURL(f),im=/^image\//.test(f.type),pv=im||/pdf$/i.test(f.type)?`<a href="${u}" target="_blank" rel="noopener">Preview</a>`:'';return `<div class="att">${im?`<img class="thumb" src="${u}" alt="">`:'📄'}<span>${escapeHtml(f.name)} · ${fmtSz(f.size)}</span>${pv}<button type="button" onclick="rmAtt(${i})">Remove</button></div>`}).join('')}
+function rmAtt(i){att.splice(i,1);selectedFiles=att.slice();renderFiles()}
+$('files').addEventListener('change',e=>{for(const f of [...e.target.files]){if(!OKF.test(f.name)){toast(f.name+': only PDF, JPG, PNG, DOC, DOCX allowed.');continue}if(att.some(x=>x.name===f.name&&x.size===f.size))continue;if(att.reduce((s,x)=>s+x.size,0)+f.size>MAXB){toast('Total attachments limit is 15 MB.');continue}att.push(f)}selectedFiles=att.slice();renderFiles();e.target.value=''});
+$('clear').addEventListener('click',()=>{att=[];refVals={};curTpl=null;curCaseId=null;['followUp','notes'].forEach(x=>$(x).value='');renderRef();renderFiles();localStorage.removeItem(DK)});
+function buildCase(st){const id=curCaseId||'SZ-'+Date.now().toString().slice(-8);let c=db.cases.find(x=>x.id===id);const o={id,category:$('category').value,ctype:$('ctype').value,company:$('company').value.trim()||'Not specified',recipient:$('recipient').value.trim(),ref:$('refid').value.trim(),refs:{...refVals},loanRef:refVals.loanAcc||refVals.loan4||'',issue:$('issue').value,level,subject:$('subject').value,body:$('body').value,followUp:$('followUp').value,notes:$('notes').value,files:att.map(f=>({name:f.name,size:f.size,type:f.type}))};if(c){Object.assign(c,o);if(st)c.status=st}else{c={...o,status:st||'Draft',date:new Date().toISOString(),history:[]};db.cases.unshift(c)}curCaseId=id;return c}
+$('save').onclick=()=>{if(!$('body').value.trim()){toast('Generate or write an email first.');return}const c=buildCase();persist();toast('Complaint saved: '+c.id);go('complaints')};
+let dt;$('page-compose').addEventListener('input',()=>{clearTimeout(dt);dt=setTimeout(()=>{try{localStorage.setItem(DK,JSON.stringify({v:['category','company','recipient','refid','issue','request','tone','subject','body','followUp','notes','ctype'].map(k=>[k,$(k).value]),refVals,level}))}catch(e){}},700)});
+function restoreDraft(){try{const d=JSON.parse(localStorage.getItem(DK)||'null');if(!d)return;d.v.forEach(([k,v])=>$(k).value=v);refVals=d.refVals||{};renderRef();if(d.level&&d.level!=='L1'){level=d.level;document.querySelectorAll('.level').forEach(b=>b.classList.toggle('selected',b.dataset.level===level))}if($('body').value||$('issue').value)toast('Your last draft was restored.')}catch(e){}}
+async function api(p,o={}){const r=await fetch(p,{credentials:'same-origin',...o,headers:{'Content-Type':'application/json','X-Requested-With':'sanzone'}});const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||'Server error '+r.status);return j}
+async function gInit(){try{G.accounts=(await api('/api/accounts')).accounts;G.ok=true}catch(e){G.ok=false;G.accounts=[]}renderG()}
+function renderG(){const s=$('gStatus');s.textContent=G.ok?'● Backend connected':'Backend not connected';s.className='pill '+(G.ok?'green':'amber');$('gList').innerHTML=G.ok?(G.accounts.length?G.accounts.map(a=>`<div class="acc"><span>${escapeHtml(a)}</span><button class="btn danger" style="padding:5px 9px" onclick="gDisc('${escapeHtml(a)}')">Disconnect</button></div>`).join(''):'<div class="hint">No Gmail account connected yet.</div>'):'<div class="hint">Open this page through your deployed SANZONE server to use Gmail sending (see README). Everything else works offline.</div>';const f=$('fromSel'),old=localStorage.getItem('sanzone_from')||db.profile.email||'';f.innerHTML=G.accounts.length?G.accounts.map(a=>`<option ${a===old?'selected':''}>${escapeHtml(a)}</option>`).join(''):'<option value="">No Gmail connected</option>';$('fromHint').textContent=G.accounts.length?'Emails go from the account selected here.':'Connect Gmail in Settings to send directly.'}
+$('fromSel').onchange=()=>localStorage.setItem('sanzone_from',$('fromSel').value);
+$('gConnect').onclick=()=>G.ok?location.href='/auth/google':toast('Backend not connected. Deploy the server first (see README).');
+async function gDisc(a){if(!confirm('Disconnect '+a+'?'))return;try{await api('/api/accounts/'+encodeURIComponent(a),{method:'DELETE'});gInit();toast('Disconnected.')}catch(e){toast(e.message)}}
+async function sha(s){try{const h=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,'0')).join('')}catch(e){return s.length+'-'+Date.now()}}
+$('gsend').onclick=async()=>{if(sending)return;if(!$('body').value.trim()||!$('subject').value.trim()){toast('Write the subject and email first.');return}const to=$('recipient').value.trim();if(!EM.test(to)){toast('Enter a valid recipient email.');$('recipient').focus();return}if(!G.ok||!$('fromSel').value){toast(G.ok?'Connect a Gmail account in Settings first.':'Backend not connected. See README.');return}const e=refErr();if(e){toast(e);return}if(/\[[^\]\n]{2,}\]/.test($('subject').value+$('body').value)){toast('Replace or remove the remaining [placeholders] first.');return}
+const from=$('fromSel').value,key=await sha([from,to,$('subject').value,$('body').value,att.map(f=>f.name+f.size).join()].join('|')),prev=(db.sentKeys||{})[key];
+$('modalTitle').textContent='Confirm before sending';$('modalContent').innerHTML=`<div class="grid" style="gap:12px"><div class="note"><b>From:</b> ${escapeHtml(from)}<br><b>To:</b> ${escapeHtml(to)}<br><b>Subject:</b> ${escapeHtml($('subject').value)}<br><b>Attachments:</b> ${att.length} file(s)</div>${prev?`<div class="stat bad">This exact email was already sent on ${new Date(prev.at).toLocaleString()}. Sending again creates a duplicate.</div>`:''}<label class="checkrow"><input type="checkbox" id="okChk"> I checked the details and want to send this email.</label><div id="sendStat" class="stat" style="display:none"></div><div class="actions"><button class="btn" id="goSend" disabled>Confirm &amp; send</button><button class="btn secondary" onclick="closeModal()">Cancel</button></div></div>`;$('caseModal').style.display='flex';$('okChk').onchange=()=>$('goSend').disabled=!$('okChk').checked||sending;$('goSend').onclick=()=>doSend(key,!!prev)};
+async function doSend(key,dup){if(sending)return;sending=true;const b=$('goSend'),st=$('sendStat');b.disabled=true;st.style.display='block';st.className='stat';st.textContent='Sending…';try{const files=await Promise.all(att.map(f=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok({name:f.name,data:r.result.split(',')[1]});r.onerror=no;r.readAsDataURL(f)}))),from=$('fromSel').value,to=$('recipient').value.trim(),subject=$('subject').value,res=await api('/api/send',{method:'POST',body:JSON.stringify({from,to,subject,body:$('body').value,attachments:files,key:key+(dup?'-'+Date.now():'')})});const c=buildCase('Sent');c.sentAt=res.at||new Date().toISOString();c.gmailId=res.id;c.threadId=res.threadId;c.from=from;(c.history=c.history||[]).push({at:c.sentAt,from,to,subject,gmailId:res.id,level,files:att.map(f=>f.name)});(db.sentKeys=db.sentKeys||{})[key]={at:c.sentAt,id:res.id};persist();st.className='stat ok';st.textContent='Sent ✓ Gmail message ID: '+res.id+(res.duplicate?' (already sent earlier, not sent twice)':'')}catch(e){st.className='stat bad';st.textContent='Failed: '+e.message+'. It was not saved as sent.';b.disabled=false}sending=false}
+function tableHTML(items){if(!items.length)return '<div class="empty">No complaints saved yet. Create your first email to get started.</div>';return '<table><thead><tr><th>Company / case</th><th>Category</th><th>Level</th><th>Status</th><th>Sent</th><th>Follow-up</th><th>Action</th></tr></thead><tbody>'+items.map(c=>`<tr><td><b>${escapeHtml(c.company)}</b><div class="hint">${escapeHtml(c.id)}${c.loanRef?' · Loan: '+escapeHtml(c.loanRef):''}${c.ref?' · Ref: '+escapeHtml(c.ref):''}</div></td><td>${escapeHtml(c.category)}</td><td><span class="pill">${escapeHtml(c.level)}</span></td><td><span class="pill ${statusClass(c.status)}">${escapeHtml(c.status)}</span></td><td>${c.sentAt?new Date(c.sentAt).toLocaleDateString():'-'}</td><td>${c.followUp?escapeHtml(c.followUp):'-'}</td><td><button class="btn secondary" style="padding:6px 9px" onclick="viewCase('${c.id}')">Open</button></td></tr>`).join('')+'</tbody></table>'}
+function viewCase(id){const c=db.cases.find(x=>x.id===id);if(!c)return;$('modalTitle').textContent=c.company+' · '+c.id;$('modalContent').innerHTML=`<div class="grid" style="gap:12px"><div class="hint">${escapeHtml(c.category)} · ${escapeHtml(c.level)} · ${new Date(c.date).toLocaleString()}${c.gmailId?'<br>Gmail message ID: '+escapeHtml(c.gmailId)+' · sent '+new Date(c.sentAt).toLocaleString()+' from '+escapeHtml(c.from||''):''}</div><div class="field"><label>Subject</label><input id="editSub" value="${escapeHtml(c.subject)}"></div><div class="field"><label>Email body</label><textarea id="editBody" style="min-height:200px">${escapeHtml(c.body)}</textarea></div><div class="formgrid"><div class="field"><label>Status</label><select id="editStatus">${['Draft','Ready','Sent','Pending','Replied','Escalated','Resolved','Rejected','Closed'].map(s=>`<option ${c.status===s?'selected':''}>${s}</option>`).join('')}</select></div><div class="field"><label>Escalation level</label><select id="editLevel">${['L1','L2','L3'].map(s=>`<option ${c.level===s?'selected':''}>${s}</option>`).join('')}</select></div><div class="field"><label>Follow-up date</label><input id="editFu" type="date" value="${escapeHtml(c.followUp||'')}"></div><div class="field"><label>Loan / reference number</label><input id="editLoan" value="${escapeHtml(c.loanRef||'')}"></div><div class="field full"><label>Notes</label><textarea id="editNotes" style="min-height:70px">${escapeHtml(c.notes||'')}</textarea></div></div>${(c.history||[]).length?'<div><b>Sent email history</b>'+c.history.map(h=>`<div class="hint">${new Date(h.at).toLocaleString()} · ${escapeHtml(h.level||'')} · to ${escapeHtml(h.to)} · ID ${escapeHtml(h.gmailId||'')}</div>`).join('')+'</div>':''}<div class="actions"><button class="btn" onclick="updateCase('${id}')">Save changes</button><button class="btn secondary" onclick="copyCase('${id}')">Copy email</button><button class="btn secondary" onclick="followUpCase('${id}')">Prepare follow-up / escalation</button><button class="btn danger" onclick="deleteCase('${id}')">Delete case</button></div></div>`;$('caseModal').style.display='flex'}
+function updateCase(id){const c=db.cases.find(x=>x.id===id);c.subject=$('editSub').value;c.body=$('editBody').value;c.status=$('editStatus').value;c.level=$('editLevel').value;c.followUp=$('editFu').value;c.loanRef=$('editLoan').value.trim();c.notes=$('editNotes').value;persist();closeModal();toast('Case updated.')}
+function followUpCase(id){const c=db.cases.find(x=>x.id===id);closeModal();go('compose');curCaseId=null;$('category').value=c.category;$('company').value=c.company==='Not specified'?'':c.company;$('recipient').value=c.recipient||'';$('refid').value=c.ref||'';refVals={...(c.refs||{}),prevComplaint:(c.refs||{}).prevComplaint||c.ref||''};level=c.level==='L1'?'L2':'L3';document.querySelectorAll('.level').forEach(b=>b.classList.toggle('selected',b.dataset.level===level));$('issue').value=c.issue||'The issue described in my earlier email is still unresolved.';$('ctype').value=SETS[c.ctype]?c.ctype:'General';renderRef();generate2()}
+function saveProfile(){const g=i=>$(i).value.trim(),em=g('profileEmail'),alt=g('pAlt'),mo=g('pMobile');if((em&&!EM.test(em))||(alt&&!EM.test(alt))){toast('Please enter a valid email ID.');return}if(mo&&!/^(\+?91)?[6-9]\d{9}$/.test(mo.replace(/[\s-]/g,''))){toast('Mobile number should be 10 digits.');return}db.profile={name:g('profileName'),email:em,altEmail:alt,mobile:mo,language:$('profileLang').value,signature:$('signature').value};persist();renderRef();renderG();toast('Profile saved. New complaints will use it.')}
+function loadProfile(){const p=db.profile||{};$('profileName').value=p.name||'';$('profileEmail').value=p.email||'';$('pAlt').value=p.altEmail||'';$('pMobile').value=p.mobile||'';$('profileLang').value=p.language||'English';$('signature').value=p.signature||'';renderStats()}
+function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));$('page-'+page).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('crumb').textContent='Workspace / '+({dashboard:'Dashboard',compose:'Create Email',complaints:'My Complaints',templates:'Templates',reply:'Smart Reply',settings:'Settings'}[page]);if(page==='complaints')renderTables();if(page==='reply')$('rpCase').innerHTML='<option value="">None</option>'+db.cases.map(c=>`<option value="${c.id}">${escapeHtml(c.company)} · ${c.id}</option>`).join('');window.scrollTo(0,0)}
+let RP=[];
+$('rpGo').onclick=()=>{const t=$('rpText').value.trim();if(t.length<15){toast('Paste the company reply first.');return}const l=t.toLowerCase(),cs=db.cases.find(x=>x.id===$('rpCase').value),co=$('rpCompany').value.trim()||(cs&&cs.company!=='Not specified'?cs.company:'')||'Team',nm=db.profile.name||'';
+const F={res:/(has been|have been|is now|was)\s+(resolved|closed|updated|corrected|rectified|removed)|rectified/.test(l),doc:/(share|provide|submit|send|upload|attach)[^.]{0,50}(document|proof|copy|statement|noc|id|detail|screenshot)/.test(l),rej:/unable to|cannot|can not|not possible|regret|rejected|declin|not eligible/.test(l),prog:/under (review|investigation|process)|in process|being (reviewed|investigated|checked)|working on|forwarded|will (get back|revert|update)|within \d+/.test(l),red:/(contact|approach|reach out|write)[^.]{0,40}(lender|bank|member|institution|nbfc)/.test(l)};
+const tm=l.match(/within\s+(\d+)\s*(working |business |calendar )?(days|hours)/),rf=(t.match(/(?:ref(?:erence)?|ticket|case|sr|request|dispute|complaint)\s*(?:no\.?|number|id|#)?\s*[:\-]?\s*((?=[A-Z0-9\-\/]*\d)[A-Z0-9][A-Z0-9\-\/]{5,24})/i)||[])[1]||(cs&&cs.ref)||'';
+const e=[],a=[];if(F.res){e.push('The company says the issue is resolved or corrected.');a.push('Check your report / account yourself and ask for the confirmation in writing.')}if(F.doc){e.push('They need more documents or details from you.');a.push('Send exactly what they asked for and quote the reference number.')}if(F.rej){e.push('The reply seems to refuse or deny your request.');a.push('Ask for the reason and the records it is based on, in writing. Escalate if you disagree.')}if(F.prog){e.push('Your complaint is being looked into'+(tm?'; they mention about '+tm[1]+' '+(tm[2]||'')+tm[3]:'')+'.');a.push('Wait for the stated time, then send a follow-up if there is no update.')}if(F.red){e.push('They suggest you contact the lender / institution directly.');a.push('Contact the lender and keep this complaint open.')}if(!e.length){e.push('The reply does not clearly say whether the issue is resolved.');a.push('Ask for a clear written status and a timeline.')}
+const core=F.rej?'Thank you for your reply. I understand my request has not been accepted. Please explain in writing the reason for this decision and the records it is based on. If any document from my side can help, please tell me which one.':F.doc?'Thank you for your reply. As requested, I am sharing the documents with this email. Please confirm receipt and tell me if anything else is required.':F.res?'Thank you for the update. Please confirm in writing that the issue is fully resolved and share the date on which the correction was made.':F.prog?'Thank you for the update. Please keep me informed and share the final outcome in writing once the review is complete.':F.red?'Thank you for the information. I will contact the lender as suggested. Please keep my complaint open until the correction is confirmed.':'Thank you for your reply. Please clarify the current status of my complaint and the expected date of resolution.';
+const rl=rf?'Reference number: '+rf+'\n\n':'',W=(g,c)=>`${g}\n\n${rl}${c}\n\nRegards,${nm?'\n'+nm:''}`,sj=s=>s+(rf?' (Ref: '+rf+')':'');
+RP=[['Suggested response',{s:sj('Re: My complaint'),b:W('Dear '+co+',',core)}],['Follow-up email',{s:sj('Follow-up: my complaint'),b:W('Dear '+co+',','I am following up on my earlier email. I have not received a resolution yet. Please share the current status, the action taken so far and the expected date of resolution.')}]];if(!F.res)RP.push(['Escalation email (use only if still unresolved)',{s:sj('Escalation: unresolved complaint'),b:W('Dear Grievance / Nodal Officer,','I am escalating my complaint because it has not been resolved at the earlier level. Please review the matter, share the action taken and send a written response with the reason for the decision and a resolution date. I can share the earlier correspondence if needed.')}]);
+$('rpOut').innerHTML=`<div class="card" style="margin-top:16px"><h2 class="sectiontitle">In simple words</h2>${e.map(x=>'<p style="margin:0 0 6px">• '+x+'</p>').join('')}<h2 class="sectiontitle" style="margin-top:14px">What you need to do</h2>${a.map(x=>'<p style="margin:0 0 6px">• '+x+'</p>').join('')}<div class="note" style="margin-top:12px">This is a keyword-based reading. Always read the original reply yourself. Nothing here is legal advice.</div></div>`+RP.map((m,i)=>`<div class="mailbox"><b>${m[0]}</b><input id="rpS${i}" value="${escapeHtml(m[1].s)}"><textarea id="rpB${i}">${escapeHtml(m[1].b)}</textarea><div class="actions"><button class="btn secondary" onclick="rpCopy(${i})">Copy</button><button class="btn" onclick="rpUse(${i})">Use in composer</button></div></div>`).join('')};
+async function rpCopy(i){try{await navigator.clipboard.writeText('Subject: '+$('rpS'+i).value+'\n\n'+$('rpB'+i).value);toast('Copied.')}catch(e){toast('Select and copy manually.')}}
+function rpUse(i){const cs=db.cases.find(x=>x.id===$('rpCase').value);go('compose');curCaseId=cs?cs.id:null;if(cs){$('category').value=cs.category;$('company').value=cs.company;$('recipient').value=cs.recipient||'';$('refid').value=cs.ref||'';refVals={...(cs.refs||{})};$('ctype').value=SETS[cs.ctype]?cs.ctype:'General';renderRef()}level=i===0?level:i===1?'L2':'L3';document.querySelectorAll('.level').forEach(b=>b.classList.toggle('selected',b.dataset.level===level));$('subject').value=$('rpS'+i).value;$('body').value=$('rpB'+i).value;toast('Loaded in composer. Review before sending.')}
+setCtype('CIBIL');loadProfile();restoreDraft();renderRef();gInit();persist();
+const qp=new URLSearchParams(location.search).get('gmail');if(qp){toast(qp==='connected'?'Gmail account connected.':'Gmail connection failed. Try again.');history.replaceState(null,'',location.pathname);go('settings')}
+</script>
+</body>
+</html>
